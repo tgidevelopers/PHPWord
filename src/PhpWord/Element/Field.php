@@ -84,6 +84,14 @@ class Field extends AbstractElement
             'properties' => array('StyleIdentifier' => ''),
             'options'    => array('PreserveFormat'),
         ),
+        'TC' => array(
+            'properties' => array(),
+            'options'    => array('Bold', 'Italic'),
+        ),
+        'TOC' => array(
+            'properties' => array(),
+            'options'    => array('Bold', 'Italic'),
+        ),
     );
 
     /**
