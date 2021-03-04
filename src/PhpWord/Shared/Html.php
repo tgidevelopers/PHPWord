@@ -128,6 +128,11 @@ class Html
                         $val = (int) $val . 'px';
                         $styles['cellSpacing'] = Converter::cssToTwip($val);
                         break;
+                    case 'cellpadding':
+                        // tables e.g. <table cellpadding="2">,  where "2" = 2px (always pixels)
+                        $val = (int) $val . 'px';
+                        $styles['cellMargin'] = Converter::cssToTwip($val);
+                        break;
                     case 'bgcolor':
                         // tables, rows, cells e.g. <tr bgColor="#FF0000">
                         $styles['bgColor'] = trim($val, '# ');
@@ -167,12 +172,12 @@ class Html
         $nodes = array(
                               // $method        $node   $element    $styles     $data   $argument1      $argument2
             'p'         => array('Paragraph',   $node,  $element,   $styles,    null,   null,           null),
-            'h1'        => array('Heading',     null,   $element,   $styles,    null,   'Heading1',     null),
-            'h2'        => array('Heading',     null,   $element,   $styles,    null,   'Heading2',     null),
-            'h3'        => array('Heading',     null,   $element,   $styles,    null,   'Heading3',     null),
-            'h4'        => array('Heading',     null,   $element,   $styles,    null,   'Heading4',     null),
-            'h5'        => array('Heading',     null,   $element,   $styles,    null,   'Heading5',     null),
-            'h6'        => array('Heading',     null,   $element,   $styles,    null,   'Heading6',     null),
+            'h1'        => array('Title',     $node,   $element,   $styles,    null,   'Heading_1',     1),
+            'h2'        => array('Title',     $node,   $element,   $styles,    null,   'Heading_2',     2),
+            'h3'        => array('Title',     $node,   $element,   $styles,    null,   'Heading_3',     3),
+            'h4'        => array('Title',     $node,   $element,   $styles,    null,   'Heading_4',     4),
+            'h5'        => array('Title',     $node,   $element,   $styles,    null,   'Heading_5',     5),
+            'h6'        => array('Title',     $node,   $element,   $styles,    null,   'Heading_6',     6),
             '#text'     => array('Text',        $node,  $element,   $styles,    null,   null,           null),
             'strong'    => array('Property',    null,   null,       $styles,    null,   'bold',         true),
             'b'         => array('Property',    null,   null,       $styles,    null,   'bold',         true),
@@ -194,7 +199,7 @@ class Html
             'br'        => array('LineBreak',   null,   $element,   $styles,    null,   null,           null),
             'a'         => array('Link',        $node,  $element,   $styles,    null,   null,           null),
             'input'     => array('Input',       $node,  $element,   $styles,    null,   null,           null),
-            'hr'        => array('HorizRule',   $node,  $element,   $styles,    null,   null,           null),
+            'hr'        => array('PageBreak',   null,   $element,   $styles,    null,   null,           null),
         );
 
         $newElement = null;
@@ -1052,5 +1057,32 @@ class Html
         // - table - throws error "cannot be inside textruns", e.g. lists
         // - line - that is a shape, has different behaviour
         // - repeated text, e.g. underline "_", because of unpredictable line wrapping
+    }
+
+    /**
+     * Parse page break
+     *
+     * @param \PhpOffice\PhpWord\Element\AbstractContainer $element
+     */
+    protected static function parsePageBreak($element)
+    {
+        $element->addPageBreak();
+    }
+
+    /**
+     * Parse title
+     *
+     * @param \PhpOffice\PhpWord\Element\AbstractContainer $element
+     * @param array &$styles
+     * @param string $argument2 depth
+     * @return \PhpOffice\PhpWord\Element\Title
+     *
+     * @todo Think of a clever way of defining header styles, now it is only based on the assumption, that
+     * Heading1 - Heading6 are already defined somewhere
+     */
+    protected static function parseTitle($node, $element, &$styles, $argument1, $argument2)
+    {
+        $newElement = $element->addTitle($node->textContent, $argument2);
+        return $newElement;
     }
 }
