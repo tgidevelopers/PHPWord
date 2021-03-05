@@ -727,13 +727,13 @@ class Html
                     $styles['borderStyle'] = self::mapBorderStyle($cValue);
                     break;
                 case 'width':
-                    if (preg_match('/([0-9]+[a-z]+)/', $cValue, $matches)) {
+                    if (preg_match('/([0-9.]+[a-z]+)/', $cValue, $matches)) {
                         $styles['width'] = Converter::cssToTwip($matches[1]);
                         $styles['unit'] = \PhpOffice\PhpWord\SimpleType\TblWidth::TWIP;
-                    } elseif (preg_match('/([0-9]+)%/', $cValue, $matches)) {
+                    } elseif (preg_match('/([0-9.]+)%/', $cValue, $matches)) {
                         $styles['width'] = $matches[1] * 50;
                         $styles['unit'] = \PhpOffice\PhpWord\SimpleType\TblWidth::PERCENT;
-                    } elseif (preg_match('/([0-9]+)/', $cValue, $matches)) {
+                    } elseif (preg_match('/([0-9.]+)/', $cValue, $matches)) {
                         $styles['width'] = $matches[1];
                         $styles['unit'] = \PhpOffice\PhpWord\SimpleType\TblWidth::AUTO;
                     }
