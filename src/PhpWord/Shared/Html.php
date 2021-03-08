@@ -200,6 +200,7 @@ class Html
             'a'         => array('Link',        $node,  $element,   $styles,    null,   null,           null),
             'input'     => array('Input',       $node,  $element,   $styles,    null,   null,           null),
             'hr'        => array('PageBreak',   null,   $element,   $styles,    null,   null,           null),
+            'figcaption'=> array('None',        $node,   $element,   $styles,    null,   null,           null)
         );
 
         $newElement = null;
@@ -1085,4 +1086,16 @@ class Html
         $newElement = $element->addTitle($node->textContent, $argument2);
         return $newElement;
     }
+
+    /**
+     * Parse none
+     * utilizzato per "censurare" eventuali tag non voluti
+     * @param $node
+     * @param $element
+     */
+    protected static function parseNone($node, $element) {
+        //DO NOTHING
+        return $element->addText('');
+    }
+
 }
