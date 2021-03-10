@@ -130,7 +130,7 @@ class IntentionallyBlankPage extends Text
         $xmlWriter->startElement('w:r');
         $xmlWriter->startElement('w:instrText');
         $xmlWriter->writeAttribute('xml:space', 'preserve');
-        $this->writeText(' " ');
+        $this->writeText(' "');
         $xmlWriter->endElement();
         $xmlWriter->endElement();
 
@@ -185,26 +185,26 @@ class IntentionallyBlankPage extends Text
         $xmlWriter->endElement();//w:p
 
         //page break
-        /*$xmlWriter->startElement('w:p');
+        $xmlWriter->startElement('w:p');
         $xmlWriter->startElement('w:r');
         $xmlWriter->startElement('w:br');
         $xmlWriter->writeAttribute('w:type', 'page');
         $xmlWriter->endElement(); // w:br
         $xmlWriter->endElement(); // w:r
-        $xmlWriter->endElement(); // w:p*/
+        $xmlWriter->endElement(); // w:p
 
         $this->startElementP();
 
-        /*$xmlWriter->startElement('w:pPr');
+        $xmlWriter->startElement('w:pPr');
         $xmlWriter->startElement('w:rPr');
         $xmlWriter->startElement('w:noProof');
         $xmlWriter->endElement();
         $xmlWriter->endElement();
-        $xmlWriter->endElement();*/
+        $xmlWriter->endElement();
 
         $xmlWriter->startElement('w:r');
-//        $xmlWriter->startElement('w:lastRenderedPageBreak');
-//        $xmlWriter->endElement();
+        $xmlWriter->startElement('w:lastRenderedPageBreak');
+        $xmlWriter->endElement();
         $xmlWriter->startElement('w:instrText');
         $this->writeText('"');
         $xmlWriter->endElement();//w:instrText
