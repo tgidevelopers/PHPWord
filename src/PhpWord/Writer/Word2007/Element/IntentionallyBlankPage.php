@@ -119,10 +119,10 @@ class IntentionallyBlankPage extends Text
         $xmlWriter->endElement();
         $xmlWriter->endElement();
 
-        //0
+        //1
         $xmlWriter->startElement('w:r');
         $xmlWriter->startElement('w:instrText');
-        $this->writeText('0');
+        $this->writeText('1');
         $xmlWriter->endElement();
         $xmlWriter->endElement();
 
@@ -136,8 +136,24 @@ class IntentionallyBlankPage extends Text
 
         $this->endElementP();
 
+        //page break
+        $xmlWriter->startElement('w:p');
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:br');
+        $xmlWriter->writeAttribute('w:type', 'page');
+        $xmlWriter->endElement(); // w:br
+        $xmlWriter->endElement(); // w:r
+        $xmlWriter->endElement(); // w:p
+
+        $xmlWriter->startElement('w:p');
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:lastRenderedPageBreak');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
         //text break
-        for ($i=0;$i<$this->nTextBreak;$i++) {
+        for ($i=0;$i<$this->nTextBreak-1;$i++) {
             $xmlWriter->startElement('w:p');
             $xmlWriter->endElement();
         }
@@ -184,14 +200,14 @@ class IntentionallyBlankPage extends Text
         $xmlWriter->endElement();//w:r
         $xmlWriter->endElement();//w:p
 
-        //page break
+        /*//page break
         $xmlWriter->startElement('w:p');
         $xmlWriter->startElement('w:r');
         $xmlWriter->startElement('w:br');
         $xmlWriter->writeAttribute('w:type', 'page');
         $xmlWriter->endElement(); // w:br
         $xmlWriter->endElement(); // w:r
-        $xmlWriter->endElement(); // w:p
+        $xmlWriter->endElement(); // w:p*/
 
         $this->startElementP();
 
@@ -203,8 +219,8 @@ class IntentionallyBlankPage extends Text
         $xmlWriter->endElement();
 
         $xmlWriter->startElement('w:r');
-        $xmlWriter->startElement('w:lastRenderedPageBreak');
-        $xmlWriter->endElement();
+        /*$xmlWriter->startElement('w:lastRenderedPageBreak');
+        $xmlWriter->endElement();*/
         $xmlWriter->startElement('w:instrText');
         $this->writeText('"');
         $xmlWriter->endElement();//w:instrText
