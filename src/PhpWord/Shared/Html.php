@@ -204,6 +204,7 @@ class Html
             'a'         => array('Link',        $node,  $element,   $styles,    null,   null,           null),
             'input'     => array('Input',       $node,  $element,   $styles,    null,   null,           null),
             'hr'        => array('PageBreak',   null,   $element,   $styles,    null,   null,           null),
+            'figcaption'=> array('None',        $node,   $element,   $styles,    null,   null,           null)
         );
 
         $newElement = null;
@@ -731,13 +732,13 @@ class Html
                     $styles['borderStyle'] = self::mapBorderStyle($cValue);
                     break;
                 case 'width':
-                    if (preg_match('/([0-9]+[a-z]+)/', $cValue, $matches)) {
+                    if (preg_match('/([0-9.]+[a-z]+)/', $cValue, $matches)) {
                         $styles['width'] = Converter::cssToTwip($matches[1]);
                         $styles['unit'] = \PhpOffice\PhpWord\SimpleType\TblWidth::TWIP;
-                    } elseif (preg_match('/([0-9]+)%/', $cValue, $matches)) {
+                    } elseif (preg_match('/([0-9.]+)%/', $cValue, $matches)) {
                         $styles['width'] = $matches[1] * 50;
                         $styles['unit'] = \PhpOffice\PhpWord\SimpleType\TblWidth::PERCENT;
-                    } elseif (preg_match('/([0-9]+)/', $cValue, $matches)) {
+                    } elseif (preg_match('/([0-9.]+)/', $cValue, $matches)) {
                         $styles['width'] = $matches[1];
                         $styles['unit'] = \PhpOffice\PhpWord\SimpleType\TblWidth::AUTO;
                     }
@@ -1089,4 +1090,16 @@ class Html
         $newElement = $element->addTitle($node->textContent, $argument2);
         return $newElement;
     }
+
+    /**
+     * Parse none
+     * utilizzato per "censurare" eventuali tag non voluti
+     * @param $node
+     * @param $element
+     */
+    protected static function parseNone($node, $element) {
+        //DO NOTHING
+        return $element->addText('');
+    }
+
 }
