@@ -803,12 +803,12 @@ class Html
                     break;
                 case 'data-mm_width':
                     $width = $attribute->value;
-                    $style['width'] = Converter::cmToPoint($width/100);
+                    $style['width'] = Converter::cmToPoint($width/10);
                     $style['unit'] = \PhpOffice\PhpWord\Style\Image::UNIT_PT;
                     break;
                 case 'data-mm_height':
                     $height = $attribute->value;
-                    $style['height'] = Converter::cmToPoint($height/100);
+                    $style['height'] = Converter::cmToPoint($height/10);
                     $style['unit'] = \PhpOffice\PhpWord\Style\Image::UNIT_PT;
                     break;
                 case 'width':
