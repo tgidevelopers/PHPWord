@@ -801,6 +801,16 @@ class Html
                 case 'src':
                     $src = $attribute->value;
                     break;
+                case 'data-mm_width':
+                    $width = $attribute->value;
+                    $style['width'] = Converter::cmToPoint($width/100);
+                    $style['unit'] = \PhpOffice\PhpWord\Style\Image::UNIT_PT;
+                    break;
+                case 'data-mm_height':
+                    $height = $attribute->value;
+                    $style['height'] = Converter::cmToPoint($height/100);
+                    $style['unit'] = \PhpOffice\PhpWord\Style\Image::UNIT_PT;
+                    break;
                 case 'width':
                     $width = $attribute->value;
                     $style['width'] = $width;
