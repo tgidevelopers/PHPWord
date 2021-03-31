@@ -410,7 +410,7 @@ class Html
             $rowStyles['tblHeader'] = true;
         }
 
-        return $element->addRow(null, $rowStyles);
+        return $element->addRow($rowStyles['height']?? null, $rowStyles);
     }
 
     /**
@@ -740,6 +740,18 @@ class Html
                         $styles['unit'] = \PhpOffice\PhpWord\SimpleType\TblWidth::PERCENT;
                     } elseif (preg_match('/([0-9.]+)/', $cValue, $matches)) {
                         $styles['width'] = $matches[1];
+                        $styles['unit'] = \PhpOffice\PhpWord\SimpleType\TblWidth::AUTO;
+                    }
+                    break;
+                case 'height':
+                    if (preg_match('/([0-9.]+[a-z]+)/', $cValue, $matches)) {
+                        $styles['height'] = Converter::cssToTwip($matches[1]);
+                        $styles['unit'] = \PhpOffice\PhpWord\SimpleType\TblWidth::TWIP;
+                    } elseif (preg_match('/([0-9.]+)%/', $cValue, $matches)) {
+                        $styles['height'] = $matches[1] * 50;
+                        $styles['unit'] = \PhpOffice\PhpWord\SimpleType\TblWidth::PERCENT;
+                    } elseif (preg_match('/([0-9.]+)/', $cValue, $matches)) {
+                        $styles['height'] = $matches[1];
                         $styles['unit'] = \PhpOffice\PhpWord\SimpleType\TblWidth::AUTO;
                     }
                     break;
