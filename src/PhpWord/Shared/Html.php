@@ -430,6 +430,11 @@ class Html
             $cellStyles['gridSpan'] = $colspan - 0;
         }
 
+        $rowspan = $node->getAttribute('rowspan');
+        if (!empty($rowspan)) {
+            $cellStyles['vMerge'] = $rowspan > 1 ? 'restart' : 'continue';
+        }
+
         // set cell width to control column widths
         $width = isset($cellStyles['width']) ? $cellStyles['width'] : null;
         unset($cellStyles['width']); // would not apply
