@@ -440,6 +440,11 @@ class Html
         unset($cellStyles['width']); // would not apply
         $cell = $element->addCell($width, $cellStyles);
 
+        $textDirection = $node->getAttribute('vertical');
+        if (!empty($textDirection)) {
+            $cell->getStyle()->setTextDirection(\PhpOffice\PhpWord\Style\Cell::TEXT_DIR_BTLR);
+        }
+
         if (self::shouldAddTextRun($node)) {
             return $cell->addTextRun(self::filterOutNonInheritedStyles(self::parseInlineStyle($node, $styles['paragraph'])));
         }
