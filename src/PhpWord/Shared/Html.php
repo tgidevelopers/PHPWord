@@ -176,6 +176,7 @@ class Html
         $nodes = array(
                               // $method        $node   $element    $styles     $data   $argument1      $argument2
             'p'         => array('Paragraph',   $node,  $element,   $styles,    null,   null,           null),
+            'div'       => array('Paragraph',   $node,  $element,   $styles,    null,   null,           null),
             'h1'        => array('Title',     $node,   $element,   $styles,    null,   'Heading_1',     1),
             'h2'        => array('Title',     $node,   $element,   $styles,    null,   'Heading_2',     2),
             'h3'        => array('Title',     $node,   $element,   $styles,    null,   'Heading_3',     3),
