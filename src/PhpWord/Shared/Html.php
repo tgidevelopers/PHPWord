@@ -441,8 +441,8 @@ class Html
         unset($cellStyles['width']); // would not apply
         $cell = $element->addCell($width, $cellStyles);
 
-        $textDirection = $node->getAttribute('vertical');
-        if (!empty($textDirection)) {
+        $textDirection = $node->getAttribute('data-text-orientation');
+        if (!empty($textDirection) && $textDirection == 'vertical') {
             $cell->getStyle()->setTextDirection(\PhpOffice\PhpWord\Style\Cell::TEXT_DIR_BTLR);
         }
 
