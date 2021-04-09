@@ -801,6 +801,10 @@ class Html
                         $styles['valign'] = self::mapAlignVertical($matches[0]);
                     }
                     break;
+                case 'margin-left':
+                case 'padding-left':
+                    $styles['indent'] = Converter::cssToCm($cValue);
+                    break;
             }
         }
 
