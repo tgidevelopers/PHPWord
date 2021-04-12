@@ -464,7 +464,7 @@ class Html
      */
     protected static function shouldAddTextRun(\DOMNode $node)
     {
-        $containsBlockElement = self::$xpath->query('.//table|./p|./ul|./ol', $node)->length > 0;
+        $containsBlockElement = self::$xpath->query('.//table|./p|./ul|./ol|./div', $node)->length > 0;
         if ($containsBlockElement) {
             return false;
         }
