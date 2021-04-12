@@ -407,6 +407,9 @@ class Html
     protected static function parseRow($node, $element, &$styles)
     {
         $rowStyles = self::parseInlineStyle($node, $styles['row']);
+        // richiesta di elisa: per default
+        $rowStyles['cantSplit'] = true;
+
         if ($node->parentNode->nodeName == 'thead') {
             $rowStyles['tblHeader'] = true;
         }
@@ -740,6 +743,12 @@ class Html
                     $styles['borderSize'] = Converter::cssToPoint($cValue);
                     break;
                 case 'border-style':
+                    if ($cValue == 'hidden') {
+                        // vuole la coppia!
+                        $styles["borderSize"] = 0;
+                        $styles["borderStyle"] = "none";
+                        break;
+                    }
                     $styles['borderStyle'] = self::mapBorderStyle($cValue);
                     break;
                 case 'width':
@@ -773,6 +782,13 @@ class Html
                 case 'border-left':
                     // must have exact order [width color style], e.g. "1px #0011CC solid" or "2pt green solid"
                     // Word does not accept shortened hex colors e.g. #CCC, only full e.g. #CCCCCC
+                    // tabelle senza bordo
+                    if ($cValue == "0") {
+                        // vuole la coppia!
+                        $styles["borderSize"] = 0;
+                        $styles["borderStyle"] = "none";
+                        break;
+                    }
                     if (preg_match('/([0-9]+[^0-9]*)\s+(\#[a-fA-F0-9]+|[a-zA-Z]+)\s+([a-z]+)/', $cValue, $matches)) {
                         if (false !== strpos($cKey, '-')) {
                             $tmp = explode('-', $cKey);
