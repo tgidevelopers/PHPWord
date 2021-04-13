@@ -819,6 +819,9 @@ class Html
                     break;
                 case 'margin-left':
                 case 'padding-left':
+                    if ($cValue == 'auto') {
+                        break;
+                    }
                     $styles['indent'] = Converter::cssToCm($cValue);
                     break;
             }
