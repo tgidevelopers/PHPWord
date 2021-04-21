@@ -408,7 +408,7 @@ class Html
     {
         $rowStyles = self::parseInlineStyle($node, $styles['row']);
         // richiesta di elisa: per default
-        $rowStyles['cantSplit'] = false;
+        $rowStyles['cantSplit'] = true;
 
         if ($node->parentNode->nodeName == 'thead') {
             $rowStyles['tblHeader'] = true;
