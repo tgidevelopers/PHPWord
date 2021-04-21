@@ -437,6 +437,22 @@ class Html
         $rowspan = $node->getAttribute('rowspan');
         if (!empty($rowspan)) {
             $cellStyles['vMerge'] = $rowspan > 1 ? 'restart' : 'continue';
+            $dom = $node->ownerDocument;
+
+            $sibling = $node->parentNode->nextSibling;
+            for ($i = 0; $i < $rowspan - 1; $i++) {
+                $pos = 0;
+                foreach ($node->parentNode->childNodes as $key => $child) {
+                    if ($node->isSameNode($child)) {
+                        $pos = $key;
+                        break;
+                    }
+                }
+                $newTD = $dom->createElement('td');
+                $newTD->setAttribute('rowspan', '1');
+                $sibling->insertBefore($newTD, $sibling->childNodes->item($pos));
+                $sibling = $sibling->nextSibling;
+            }
         }
 
         // set cell width to control column widths
