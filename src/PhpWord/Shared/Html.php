@@ -176,7 +176,7 @@ class Html
         $nodes = array(
                               // $method        $node   $element    $styles     $data   $argument1      $argument2
             'p'         => array('Paragraph',   $node,  $element,   $styles,    null,   null,           null),
-            'div'       => array('Paragraph',   $node,  $element,   $styles,    null,   null,           null),
+            //'div'       => array('Paragraph',   $node,  $element,   $styles,    null,   null,           null),
             'h1'        => array('Title',     $node,   $element,   $styles,    null,   'Heading_1',     1),
             'h2'        => array('Title',     $node,   $element,   $styles,    null,   'Heading_2',     2),
             'h3'        => array('Title',     $node,   $element,   $styles,    null,   'Heading_3',     3),
@@ -480,7 +480,7 @@ class Html
      */
     protected static function shouldAddTextRun(\DOMNode $node)
     {
-        $containsBlockElement = self::$xpath->query('.//table|./p|./ul|./ol|./div', $node)->length > 0;
+        $containsBlockElement = self::$xpath->query('.//table|./p|./ul|./ol', $node)->length > 0;
         if ($containsBlockElement) {
             return false;
         }
@@ -863,6 +863,9 @@ class Html
                 case 'src':
                     $src = $attribute->value;
                     break;
+                case 'align':
+                    $style['alignment'] = self::mapAlign($attribute->value);
+                    break;
                 case 'data-mm_width':
                     $width = $attribute->value;
                     $style['width'] = Converter::cmToPoint($width/10);
@@ -904,6 +907,10 @@ class Html
                                         $style['wrap'] = \PhpOffice\PhpWord\Style\Image::WRAP_TIGHT;
                                         $style['overlap'] = true;
                                     }
+                                    break;
+                                case 'text-align' :
+                                    $alignment=trim($v);
+                                    $style['alignment'] = self::mapAlign($alignment);
                                     break;
                             }
                         }
