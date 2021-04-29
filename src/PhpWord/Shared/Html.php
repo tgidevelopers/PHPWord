@@ -397,6 +397,45 @@ class Html
     }
 
     /**
+     * Merge style attributes between child and parent
+     *
+     * @param $parentStyleAttributeValue
+     * @param $childStyleAttributeValue
+     */
+    protected static function mergeStyle($parentStyleAttributeValue, $childStyleAttributeValue) {
+        $parentProperties = explode(';', trim($parentStyleAttributeValue, " \t\n\r\0\x0B;"));
+        $childProperties = explode(';', trim($childStyleAttributeValue, " \t\n\r\0\x0B;"));
+
+        $childStyle = array();
+
+        $mergedStyle = '';
+
+        foreach ($childProperties as $property) {
+            list($cKey, $cValue) = array_pad(explode(':', $property, 2), 2, null);
+            $cValue = trim($cValue);
+            $cKey = strtolower(trim($cKey));
+            $childStyle[$cKey] = $cValue;
+        }
+
+        foreach ($parentProperties as $property) {
+            list($cKey, $cValue) = array_pad(explode(':', $property, 2), 2, null);
+            $cValue = trim($cValue);
+            $cKey = strtolower(trim($cKey));
+            //The child has priority on parent
+            if(!array_key_exists($cKey, $childStyle)) {
+                $childStyle[$cKey] = $cValue;
+            }
+        }
+
+        foreach($childStyle as $key => $value) {
+            $mergedStyle .= $key.': '.$value.';';
+        }
+
+        return $mergedStyle;
+    }
+
+
+    /**
      * Parse a table row
      *
      * @param \DOMNode $node
@@ -413,6 +452,28 @@ class Html
         if ($node->parentNode->nodeName == 'thead') {
             $rowStyles['tblHeader'] = true;
         }
+
+        foreach($node->childNodes as $childNode) {
+            if (strtolower($childNode->nodeName) == 'td' || strtolower($childNode->nodeName) == 'th') {
+
+                foreach($node->attributes as $parentAttribute) {
+                    if(strtolower($parentAttribute->name)!='style') continue;
+
+                    $childStyleAttributeValue = '';
+                    $parentStyleAttributeValue = $parentAttribute->value;
+
+                    //search style attribute in child
+                    foreach($childNode->attributes as $childAttribute) {
+                        if(strtolower($childAttribute->name)!='style') continue;
+                        $childStyleAttributeValue = $childAttribute->value;
+                    }
+
+                    $childNode->setAttribute('style', self::mergeStyle($parentStyleAttributeValue, $childStyleAttributeValue));
+                }
+
+            }
+        }
+
 
         return $element->addRow($rowStyles['height']?? null, $rowStyles);
     }
