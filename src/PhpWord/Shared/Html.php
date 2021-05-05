@@ -784,10 +784,10 @@ class Html
                 case 'font-size':
                     $styles['size'] = Converter::cssToPoint($cValue);
                     break;
-                case 'font-family':
+                /*case 'font-family':
                     $cValue = array_map('trim', explode(',', $cValue));
                     $styles['name'] = ucwords($cValue[0]);
-                    break;
+                    break;*/
                 case 'color':
                     $styles['color'] = trim($cValue, '#');
                     break;
