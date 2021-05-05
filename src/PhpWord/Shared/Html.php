@@ -365,6 +365,32 @@ class Html
         self::parseInlineStyle($node, $styles['font']);
     }
 
+    private static function cleanUpTableWidth(&$node) {
+        $attributes = $node->attributes; // get all the attributes(eg: id, class)
+
+        foreach ($attributes as $k => $attribute) {
+
+            switch (strtolower($attribute->name)) {
+                case 'style':
+                    $properties = explode(';', trim($attribute->value, " \t\n\r\0\x0B;"));
+
+                    foreach ($properties as $key => $property) {
+                        list($cKey, $cValue) = array_pad(explode(':', $property, 2), 2, null);
+                        $cValue = trim($cValue);
+                        $cKey = strtolower(trim($cKey));
+                        switch ($cKey) {
+                            case 'width':
+                                unset($properties[$key]);
+                                break;
+                        }
+                    }
+                    $node->setAttribute('style', implode(';', $properties));
+                    break;
+            }
+
+        }
+    }
+
     /**
      * Parse table node
      *
@@ -377,8 +403,9 @@ class Html
      */
     protected static function parseTable($node, $element, &$styles)
     {
-        $elementStyles = self::parseInlineStyle($node, $styles['table']);
 
+        self::cleanUpTableWidth($node);
+        $elementStyles = self::parseInlineStyle($node, $styles['table']);
         $newElement = $element->addTable($elementStyles);
 
         // $attributes = $node->attributes;
