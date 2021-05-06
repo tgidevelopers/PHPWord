@@ -525,6 +525,7 @@ class Html
         $rowspan = $node->getAttribute('rowspan');
         if (!empty($rowspan)) {
             if ($rowspan > 1) {
+                $colspan = $node->getAttribute('colspan') ?? 1;
                 $cellStyles['vMerge'] = 'restart';
 
                 $dom = $node->ownerDocument;
@@ -539,6 +540,7 @@ class Html
                     }
                     $newTD = $dom->createElement('td');
                     $newTD->setAttribute('data-cell-collapse', '1');
+                    $newTD->setAttribute('colspan', $colspan);
                     $sibling->insertBefore($newTD, $sibling->childNodes->item($pos));
                     $sibling = $sibling->nextSibling;
                 }
