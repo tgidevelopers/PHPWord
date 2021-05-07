@@ -404,7 +404,7 @@ class Html
     protected static function parseTable($node, $element, &$styles)
     {
 
-        self::cleanUpTableWidth($node);
+//        self::cleanUpTableWidth($node);
         $elementStyles = self::parseInlineStyle($node, $styles['table']);
         $newElement = $element->addTable($elementStyles);
 
@@ -595,7 +595,7 @@ class Html
     protected static function recursiveParseStylesInHierarchy(\DOMNode $node, array $style)
     {
         $parentStyle = array();
-        if ($node->parentNode != null && XML_ELEMENT_NODE == $node->parentNode->nodeType) {
+        if ($node->parentNode != null && XML_ELEMENT_NODE == $node->parentNode->nodeType && $node->parentNode->tagName != 'table') {
             $parentStyle = self::recursiveParseStylesInHierarchy($node->parentNode, array());
         }
         if ($node->nodeName === '#text') {
