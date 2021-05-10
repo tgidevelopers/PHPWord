@@ -100,7 +100,14 @@ class IntentionallyBlankPage extends Text
         $xmlWriter->startElement('w:r');
         $xmlWriter->startElement('w:instrText');
         $xmlWriter->writeAttribute('xml:space', 'preserve');
-        $this->writeText(' ; 2) ');
+
+        if (locale_get_default() == 'it_IT') {
+            $separator = ';';
+        } else {
+            $separator = ',';
+        }
+        $this->writeText(' '.$separator.' 2) ');
+
         $xmlWriter->endElement();
         $xmlWriter->endElement();
 
