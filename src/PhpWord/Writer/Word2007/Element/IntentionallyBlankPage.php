@@ -31,6 +31,240 @@ class IntentionallyBlankPage extends Text
      */
     public function write()
     {
+        //{ IF { =INT({ PAGE } / 2) * 2 } = { PAGE } "true" "false" \*MERGEFORMAT }
+
+        $xmlWriter = $this->getXmlWriter();
+        $element = $this->getElement();
+        if (!$element instanceof \PhpOffice\PhpWord\Element\IntentionallyBlankPage) {
+            return;
+        }
+
+        $text = $element->getText();
+
+        $this->startElementP();
+
+        //{
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:fldChar');
+        $xmlWriter->writeAttribute('w:fldCharType', 'begin');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+
+        //IF
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:instrText');
+        $xmlWriter->writeAttribute('xml:space', 'preserve');
+        $this->writeText(' IF ');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+        //{
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:fldChar');
+        $xmlWriter->writeAttribute('w:fldCharType', 'begin');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+        //=INT(
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:instrText');
+        $xmlWriter->writeAttribute('xml:space', 'preserve');
+        $this->writeText(' =INT(');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+        //{
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:fldChar');
+        $xmlWriter->writeAttribute('w:fldCharType', 'begin');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+        //PAGE
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:instrText');
+        $xmlWriter->writeAttribute('xml:space', 'preserve');
+        $this->writeText(' PAGE ');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+        //}
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:fldChar');
+        $xmlWriter->writeAttribute('w:fldCharType', 'end');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+        // / 2) * 2
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:instrText');
+        $xmlWriter->writeAttribute('xml:space', 'preserve');
+        $this->writeText(' / 2) * 2 ');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+        //}
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:fldChar');
+        $xmlWriter->writeAttribute('w:fldCharType', 'end');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+        //=
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:instrText');
+        $xmlWriter->writeAttribute('xml:space', 'preserve');
+        $this->writeText(' = ');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+        //{
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:fldChar');
+        $xmlWriter->writeAttribute('w:fldCharType', 'begin');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+        //PAGE
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:instrText');
+        $xmlWriter->writeAttribute('xml:space', 'preserve');
+        $this->writeText(' PAGE ');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+        //}
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:fldChar');
+        $xmlWriter->writeAttribute('w:fldCharType', 'end');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+        //true
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:instrText');
+        $xmlWriter->writeAttribute('xml:space', 'preserve');
+        $this->writeText(' ""');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+        //false
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:instrText');
+        $xmlWriter->writeAttribute('xml:space', 'preserve');
+        $this->writeText(' "');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+        $this->endElementP();
+
+        //page break
+        $xmlWriter->startElement('w:p');
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:br');
+        $xmlWriter->writeAttribute('w:type', 'page');
+        $xmlWriter->endElement(); // w:br
+        $xmlWriter->endElement(); // w:r
+        $xmlWriter->endElement(); // w:p
+
+        $xmlWriter->startElement('w:p');
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:lastRenderedPageBreak');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+        //text break
+        for ($i=0;$i<$this->nTextBreak-1;$i++) {
+            $xmlWriter->startElement('w:p');
+            $xmlWriter->endElement();
+        }
+
+        //Text style
+        $xmlWriter->startElement('w:p');
+        $xmlWriter->startElement('w:pPr');
+        $xmlWriter->startElement('w:jc');
+        $xmlWriter->writeAttribute('w:val', 'center');
+        $xmlWriter->endElement();//w:jc
+        $xmlWriter->startElement('w:rPr');
+        $xmlWriter->startElement('w:b');
+        $xmlWriter->endElement();//w:b
+        $xmlWriter->startElement('w:bCs');
+        $xmlWriter->endElement();//w:bCs
+        $xmlWriter->startElement('w:sz');
+        $xmlWriter->writeAttribute('w:val', '32');
+        $xmlWriter->endElement();//w:sz
+        $xmlWriter->startElement('w:szCs');
+        $xmlWriter->writeAttribute('w:val', '32');
+        $xmlWriter->endElement();//w:szCS
+        $xmlWriter->endElement();//w:rPr
+        $xmlWriter->endElement();//w:pPr
+
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:rPr');
+        $xmlWriter->startElement('w:b');
+        $xmlWriter->endElement();//w:b
+        $xmlWriter->startElement('w:bCs');
+        $xmlWriter->endElement();//w:bCs
+        $xmlWriter->startElement('w:sz');
+        $xmlWriter->writeAttribute('w:val', '32');
+        $xmlWriter->endElement();//w:sz
+        $xmlWriter->startElement('w:szCs');
+        $xmlWriter->writeAttribute('w:val', '32');
+        $xmlWriter->endElement();//w:szCS
+        $xmlWriter->endElement();//w:rPr
+
+        //Text
+        $xmlWriter->startElement('w:instrText');
+        $this->writeText($text);
+        $xmlWriter->endElement();//w:instrText
+
+        $xmlWriter->endElement();//w:r
+        $xmlWriter->endElement();//w:p
+
+        $this->startElementP();
+
+        $xmlWriter->startElement('w:pPr');
+        $xmlWriter->startElement('w:rPr');
+        $xmlWriter->startElement('w:noProof');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+        $xmlWriter->startElement('w:r');
+        /*$xmlWriter->startElement('w:lastRenderedPageBreak');
+        $xmlWriter->endElement();*/
+        $xmlWriter->startElement('w:instrText');
+        $this->writeText('"');
+        $xmlWriter->endElement();//w:instrText
+        $xmlWriter->endElement();//w:r
+
+
+        //\* MERGEFORMAT
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:instrText');
+        $xmlWriter->writeAttribute('xml:space', 'preserve');
+        $this->writeText(' \\* MERGEFORMAT ');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+        //}
+        $xmlWriter->startElement('w:r');
+        $xmlWriter->startElement('w:fldChar');
+        $xmlWriter->writeAttribute('w:fldCharType', 'end');
+        $xmlWriter->endElement();
+        $xmlWriter->endElement();
+
+        $this->endElementP(); // w:p
+    }
+
+
+    /**
+     * Write intentionally blank page element.
+     */
+    public function old_write()
+    {
         //{ IF { =MOD({ PAGE } ; 2)} = 0 "true" "false" \*MERGEFORMAT }
 
         $xmlWriter = $this->getXmlWriter();
