@@ -191,7 +191,7 @@ class Html
             'u'         => array('Property',    null,   null,       $styles,    null,   'underline',    'single'),
             'sup'       => array('Property',    null,   null,       $styles,    null,   'superScript',  true),
             'sub'       => array('Property',    null,   null,       $styles,    null,   'subScript',    true),
-            'span'      => array('Span',        $node,  null,       $styles,    null,   null,           null),
+            'span'      => array('Span',        $node,  $element,   $styles,    null,   null,           null),
             'font'      => array('Span',        $node,  null,       $styles,    null,   null,           null),
             'table'     => array('Table',       $node,  $element,   $styles,    null,   null,           null),
             'tr'        => array('Row',         $node,  $element,   $styles,    null,   null,           null),
@@ -358,11 +358,40 @@ class Html
      * Parse span node
      *
      * @param \DOMNode $node
+     * @param \PhpOffice\PhpWord\Element\AbstractContainer $element
      * @param array &$styles
      */
-    protected static function parseSpan($node, &$styles)
+    protected static function parseSpan($node, $element, &$styles)
     {
         self::parseInlineStyle($node, $styles['font']);
+
+        $attributes = $node->attributes; // get all the attributes(eg: id, class)
+
+        //Signal list management
+        foreach ($attributes as $attribute) {
+            switch (strtolower($attribute->name)) {
+                case 'class':
+                    $properties = explode(' ', $attribute->value);
+
+                    foreach ($properties as $property) {
+                        switch (trim($property)) {
+                            case 'signal':
+                                $placeholder = $node->getAttribute('data-placeholder');
+                                if (!empty($placeholder)) {
+                                    $element->addBookmark($placeholder);
+                                }
+                                break;
+                            case 'signal-ref':
+                                $placeholder = $node->getAttribute('data-placeholder');
+                                if (!empty($placeholder)) {
+                                    $element->addField('PAGEREF', array(), array($placeholder . ' \\h'));
+                                }
+                                break;
+                        }
+                    }
+                    break;
+            }
+        }
     }
 
     private static function cleanUpTableWidth(&$node) {

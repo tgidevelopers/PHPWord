@@ -92,6 +92,10 @@ class Field extends AbstractElement
             'properties' => array(),
             'options'    => array('Bold', 'Italic'),
         ),
+        'PAGEREF' => array(
+            'properties' => array(),
+            'options'    => array('Bold', 'Italic'),
+        ),
     );
 
     /**
