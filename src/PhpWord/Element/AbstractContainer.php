@@ -47,6 +47,7 @@ namespace PhpOffice\PhpWord\Element;
  * @method PreserveText addIntentionallyBlankPage(string $text)
  *
  * @method \PhpOffice\PhpWord\Element\OLEObject addObject(string $source, mixed $style = null) deprecated, use addOLEObject instead
+ * @method AttachmentTOC addAttachmentTOC(mixed $fontStyle = null, mixed $tocStyle = null, int $minDepth = 1, int $maxDepth = 9)
  *
  * @since 0.10.0
  */
@@ -85,7 +86,7 @@ abstract class AbstractContainer extends AbstractElement
             'ListItem', 'ListItemRun', 'Table', 'Image', 'Object', 'OLEObject',
             'Footnote', 'Endnote', 'CheckBox', 'TextBox', 'Field',
             'Line', 'Shape', 'Title', 'TOC', 'PageBreak',
-            'Chart', 'FormField', 'SDT', 'Comment', 'IntentionallyBlankPage'
+            'Chart', 'FormField', 'SDT', 'Comment', 'IntentionallyBlankPage', 'AttachmentTOC'
         );
         $functions = array();
         foreach ($elements as $element) {
