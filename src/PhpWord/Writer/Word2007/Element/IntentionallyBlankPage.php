@@ -89,6 +89,8 @@ class IntentionallyBlankPage extends Text
         $xmlWriter->endElement();
         $xmlWriter->endElement();
 
+        $xmlWriter->writeRaw("<w:r><w:fldChar w:fldCharType=\"separate\"/></w:r><w:r><w:rPr><w:noProof/></w:rPr><w:instrText>1</w:instrText></w:r>");
+
         //}
         $xmlWriter->startElement('w:r');
         $xmlWriter->startElement('w:fldChar');
@@ -103,6 +105,8 @@ class IntentionallyBlankPage extends Text
         $this->writeText(' / 2) * 2 ');
         $xmlWriter->endElement();
         $xmlWriter->endElement();
+
+        $xmlWriter->writeRaw("<w:r><w:fldChar w:fldCharType=\"separate\"/></w:r><w:r><w:rPr><w:noProof/></w:rPr><w:instrText>0</w:instrText></w:r>");
 
         //}
         $xmlWriter->startElement('w:r');
@@ -134,6 +138,8 @@ class IntentionallyBlankPage extends Text
         $xmlWriter->endElement();
         $xmlWriter->endElement();
 
+        $xmlWriter->writeRaw("<w:r><w:fldChar w:fldCharType=\"separate\"/></w:r><w:r><w:rPr><w:noProof/></w:rPr><w:instrText>1</w:instrText></w:r>");
+
         //}
         $xmlWriter->startElement('w:r');
         $xmlWriter->startElement('w:fldChar');
@@ -145,7 +151,7 @@ class IntentionallyBlankPage extends Text
         $xmlWriter->startElement('w:r');
         $xmlWriter->startElement('w:instrText');
         $xmlWriter->writeAttribute('xml:space', 'preserve');
-        $this->writeText(' ""');
+        $xmlWriter->writeRaw(" \"\"");
         $xmlWriter->endElement();
         $xmlWriter->endElement();
 
@@ -153,7 +159,7 @@ class IntentionallyBlankPage extends Text
         $xmlWriter->startElement('w:r');
         $xmlWriter->startElement('w:instrText');
         $xmlWriter->writeAttribute('xml:space', 'preserve');
-        $this->writeText(' "');
+        $xmlWriter->writeRaw(" \"");
         $xmlWriter->endElement();
         $xmlWriter->endElement();
 
