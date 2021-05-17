@@ -111,12 +111,12 @@ class AttachmentTOC extends AbstractElement
         $xmlWriter->endElement();
         $xmlWriter->endElement();
 
-        $xmlWriter->startElement('w:r');
+        /*$xmlWriter->startElement('w:r');
         $xmlWriter->startElement('w:instrText');
         $xmlWriter->writeAttribute('xml:space', 'preserve');
         $xmlWriter->text("PAGEREF _Toc{$rId} \h");
         $xmlWriter->endElement();
-        $xmlWriter->endElement();
+        $xmlWriter->endElement();*/
 
         $xmlWriter->startElement('w:r');
         $xmlWriter->startElement('w:fldChar');
@@ -195,7 +195,7 @@ class AttachmentTOC extends AbstractElement
         $xmlWriter->startElement('w:r');
         $xmlWriter->startElement('w:instrText');
         $xmlWriter->writeAttribute('xml:space', 'preserve');
-        $xmlWriter->text("TOC \o {$minDepth}-{$maxDepth} \\n \p \" \" ");
+        $xmlWriter->writeRaw("TOC \o \"{$minDepth}-{$maxDepth}\" \\n \h \z \p \" \" ");
         $xmlWriter->endElement();
         $xmlWriter->endElement();
 
