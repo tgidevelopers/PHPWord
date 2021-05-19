@@ -46,13 +46,22 @@ class IntentionallyBlankPage extends AbstractElement
     private $paragraphStyle;
 
     /**
+     * Text break number
+     *
+     * @var int
+     */
+    private $nTextBreak;
+
+    /**
      * Create a new Intentionally blank page Element
      *
      * @param string $text
+     * @param int $nTextBreak
      */
-    public function __construct($text = null)
+    public function __construct($text = null, $nTextBreak = 15)
     {
         $this->setText($text);
+        $this->setNTextBreak($nTextBreak);
     }
 
     /**
@@ -76,5 +85,28 @@ class IntentionallyBlankPage extends AbstractElement
     public function getText()
     {
         return $this->text;
+    }
+
+    /**
+     * Set text break number
+     *
+     * @param int $nTextBreak
+     * @return self
+     */
+    public function setNTextBreak($nTextBreak)
+    {
+        $this->nTextBreak = $nTextBreak;
+
+        return $this;
+    }
+
+    /**
+     * Get Text break number
+     *
+     * @return int
+     */
+    public function getNTextBreak()
+    {
+        return $this->nTextBreak;
     }
 }

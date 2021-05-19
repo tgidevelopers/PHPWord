@@ -24,12 +24,13 @@ namespace PhpOffice\PhpWord\Writer\Word2007\Element;
  */
 class IntentionallyBlankPage extends Text
 {
+    // rimane qs per via della old_write
     protected $nTextBreak = 15;
 
     /**
      * Write intentionally blank page element.
      */
-    public function write()
+    public function write($nTextBreak = 15)
     {
         //{ IF { =INT({ PAGE } / 2) * 2 } = { PAGE } "true" "false" \*MERGEFORMAT }
 
@@ -40,6 +41,8 @@ class IntentionallyBlankPage extends Text
         }
 
         $text = $element->getText();
+
+        $nTextBreak = $element->getNTextBreak();
 
         $this->startElementP();
 
@@ -176,7 +179,7 @@ class IntentionallyBlankPage extends Text
         $xmlWriter->endElement();
 
         //text break
-        for ($i=0;$i<$this->nTextBreak-1;$i++) {
+        for ($i=0;$i<$nTextBreak-1;$i++) {
             $xmlWriter->startElement('w:p');
             $xmlWriter->endElement();
         }

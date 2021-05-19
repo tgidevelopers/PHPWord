@@ -44,7 +44,7 @@ namespace PhpOffice\PhpWord\Element;
  * @method Chart addChart(string $type, array $categories, array $values, array $style = null, $seriesName = null)
  * @method FormField addFormField(string $type, mixed $fStyle = null, mixed $pStyle = null)
  * @method SDT addSDT(string $type)
- * @method PreserveText addIntentionallyBlankPage(string $text)
+ * @method PreserveText addIntentionallyBlankPage(string $text, int $nTextBreak = 15)
  *
  * @method \PhpOffice\PhpWord\Element\OLEObject addObject(string $source, mixed $style = null) deprecated, use addOLEObject instead
  * @method AttachmentTOC addAttachmentTOC(mixed $fontStyle = null, mixed $tocStyle = null, int $minDepth = 1, int $maxDepth = 9)
