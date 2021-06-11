@@ -658,7 +658,7 @@ class Html
             'borderStyle',
             'spaceAfter',
             'spaceBefore',
-            'underline',
+            //'underline',
             'strikethrough',
             'hidden',
         );
