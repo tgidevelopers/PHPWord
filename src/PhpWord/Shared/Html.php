@@ -144,8 +144,11 @@ class Html
                         }
                         break;
                     case 'border' :
-                        $styles['borderSize'] = Converter::pixelToTwip($val*0.4);
-                        $styles['borderStyle'] = 'single';
+                        $size = Converter::pixelToTwip($val*0.4);
+                        if ($size > 0) {
+                            $styles['borderSize'] = $size;
+                            $styles['borderStyle'] = 'single';
+                        }
                         break;
                 }
             }
