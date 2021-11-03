@@ -438,6 +438,12 @@ class Html
 
 //        self::cleanUpTableWidth($node);
         $elementStyles = self::parseInlineStyle($node, $styles['table']);
+
+        $attributes = $node->attributes;
+        if ($attributes->getNamedItem('layout') !== null) {
+            $elementStyles['layout'] = $attributes->getNamedItem('layout')->value;
+        }
+
         $newElement = $element->addTable($elementStyles);
 
         // $attributes = $node->attributes;
