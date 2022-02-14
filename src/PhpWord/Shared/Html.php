@@ -688,10 +688,16 @@ class Html
     protected static function parseList($node, $element, &$styles, &$data)
     {
         $isOrderedList = $node->nodeName === 'ol';
-        if (isset($data['listdepth'])) {
+        $parentListType = isset($data['listtype'])? $data['listtype'] : null;
+        if (isset($data['listdepth']) && $parentListType === $node->nodeName) {
             $data['listdepth']++;
         } else {
-            $data['listdepth'] = 0;
+            if ($parentListType) {
+                $data['listdepth']++;
+            } else {
+                $data['listdepth'] = 0;
+            }
+            $data['listtype'] = $node->nodeName;
             $styles['list'] = 'listStyle_' . self::$listIndex++;
             $style = $element->getPhpWord()->addNumberingStyle($styles['list'], self::getListStyle($isOrderedList));
 
