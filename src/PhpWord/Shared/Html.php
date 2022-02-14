@@ -143,12 +143,17 @@ class Html
                             $styles['valign'] = self::mapAlignVertical($matches[0]);
                         }
                         break;
-                    case 'border' :
+                    case 'border':
                         $size = Converter::pixelToTwip($val*0.4);
                         if ($size > 0) {
                             $styles['borderSize'] = $size;
                             $styles['borderStyle'] = 'single';
                         }
+                        break;
+                    case 'data-nobreak':
+                        $styles['cantSplit'] = true;
+                        $styles['keepNext'] = true;
+                        $styles['keepLines'] = true;
                         break;
                 }
             }
