@@ -166,8 +166,6 @@ class IntentionallyBlankPage extends Text
         $xmlWriter->endElement();
         $xmlWriter->endElement();
 
-        $this->endElementP();
-
         //page break
         $xmlWriter->startElement('w:p');
         $xmlWriter->startElement('w:r');
@@ -176,6 +174,8 @@ class IntentionallyBlankPage extends Text
         $xmlWriter->endElement(); // w:br
         $xmlWriter->endElement(); // w:r
         $xmlWriter->endElement(); // w:p
+
+        $this->endElementP();
 
         $xmlWriter->startElement('w:p');
         $xmlWriter->startElement('w:r');
