@@ -717,6 +717,9 @@ class Html
                     case 'type':
                         $type = $attribute->value;
                         break;
+                    case 'style':
+                        $type = self::parseListTypeStyle($attribute->value) ? : $type;
+                        break;
                 }
             }
 
@@ -734,6 +737,32 @@ class Html
         if ($node->parentNode->nodeName === 'li') {
             return $element->getParent();
         }
+    }
+
+    protected static function parseListTypeStyle($style) {
+        $items = explode(';', $style);
+        foreach ($items as $item) {
+            $single = explode(':', $item);
+            $key = $single[0];
+            $value = $single[1] ?? '';
+            switch (mb_strtolower(trim($key))) {
+                case 'list-style-type': {
+                    switch (mb_strtolower(trim($value))) {
+                        case 'lower-alpha':
+                            return 'a';
+                        case 'upper-alpha':
+                            return 'A';
+                        case 'lower-roman':
+                            return 'i';
+                        case 'upper-roman':
+                            return 'I';
+                        default:
+                            return '1';
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     /**
