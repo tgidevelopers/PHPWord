@@ -588,6 +588,7 @@ class Html
                     $newTD = $dom->createElement('td');
                     $newTD->setAttribute('data-cell-collapse', '1');
                     $newTD->setAttribute('colspan', $colspan);
+                    $newTD->setAttribute('style', $node->getAttribute('style'));
                     $sibling->insertBefore($newTD, $sibling->childNodes->item($pos));
                     $sibling = $sibling->nextSibling;
                 }
@@ -624,7 +625,7 @@ class Html
      */
     protected static function shouldAddTextRun(\DOMNode $node)
     {
-        $containsBlockElement = self::$xpath->query('.//table|./p|./ul|./ol|./div', $node)->length > 0;
+        $containsBlockElement = self::$xpath->query('.//table|./p|./ul|./ol', $node)->length > 0;
         if ($containsBlockElement) {
             return false;
         }
