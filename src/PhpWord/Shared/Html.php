@@ -159,6 +159,10 @@ class Html
                         $styles['keepNext'] = true;
                         $styles['keepLines'] = true;
                         break;
+                    case 'data-table-layout':
+                        //layout: Table layout, either fixed or autofit See \PhpOffice\PhpWord\Style\Table for constants
+                        $styles['layout'] = $val;
+                        break;
                 }
             }
         }
