@@ -887,7 +887,16 @@ class Html
                     $styles['color'] = trim($cValue, '#');
                     break;
                 case 'background-color':
-                    $styles['bgColor'] = trim($cValue, '#');
+                    if (str_starts_with($cValue, '#')) {
+                        $styles['bgColor'] = trim($cValue, '#');
+                    }
+                    if (str_starts_with($cValue, 'rgb(')) {
+                        preg_match('/rgb\(([\d]+),[\s]*([\d]+),[\s]*([\d]+)\)/', $cValue, $matches);
+                        if (!empty($matches)) {
+                            $cValue = sprintf("%02x%02x%02x", $matches[1] ?? 255, $matches[2] ?? 255, $matches[3] ?? 255);
+                            $styles['bgColor'] = $cValue;
+                        }
+                    }
                     break;
                 case 'line-height':
                     $matches = array();
@@ -946,7 +955,10 @@ class Html
                     self::mapBorderColor($styles, $cValue);
                     break;
                 case 'border-width':
-                    $styles['borderSize'] = Converter::cssToPoint($cValue);
+                    $size = Converter::cssToPoint($cValue);
+                    if ($size > 0) {
+                        $styles['borderSize'] = $size;
+                    }
                     break;
                 case 'border-style':
                     if ($cValue == 'hidden') {
