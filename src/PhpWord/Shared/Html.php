@@ -958,6 +958,9 @@ class Html
                     $size = Converter::cssToPoint($cValue);
                     if ($size > 0) {
                         $styles['borderSize'] = $size;
+                    } if ($size == 0) {
+                        $styles["borderSize"] = 0;
+                        $styles["borderStyle"] = "none";
                     }
                     break;
                 case 'border-style':
