@@ -884,7 +884,16 @@ class Html
                     $styles['name'] = ucwords($cValue[0]);
                     break;
                 case 'color':
-                    $styles['color'] = trim($cValue, '#');
+                    if (str_starts_with($cValue, '#')) {
+                        $styles['color'] = trim($cValue, '#');
+                    }
+                    if (str_starts_with($cValue, 'rgb(')) {
+                        preg_match('/rgb\(([\d]+),[\s]*([\d]+),[\s]*([\d]+)\)/', $cValue, $matches);
+                        if (!empty($matches)) {
+                            $cValue = sprintf("%02x%02x%02x", $matches[1] ?? 255, $matches[2] ?? 255, $matches[3] ?? 255);
+                            $styles['color'] = $cValue;
+                        }
+                    }
                     break;
                 case 'background-color':
                     if (str_starts_with($cValue, '#')) {
